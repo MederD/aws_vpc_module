@@ -7,7 +7,7 @@ Copy and paste into your Terraform configuration, insert the variables, and run 
 
 ```
 module "vpc" {
-  source  = "github.com/MederD/terraform_sprintqa/tree/main/terraform_hw4/network_infrastracture"
+  source  = "github.com/MederD/aws_vpc_module"
 
   * insert variables here
 }
