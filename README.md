@@ -7,8 +7,8 @@ Copy and paste into your Terraform configuration, insert the variables, and run 
 
 ```
 module "vpc" {
-  source  Example: "github.com/MederD/aws_vpc_module"
-  version Example: "1.0"
+  source  = "github.com/MederD/aws_vpc_module"
+  version = "1.0"
   # insert variables here
 }
 ```
