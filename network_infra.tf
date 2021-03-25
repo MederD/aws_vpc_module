@@ -6,7 +6,7 @@ resource "aws_vpc" "my_new_vpc" {
 
   tags           = {
     Name         = "${var.prefix}-vpc"
-    Created_by   = var.prefix
+    Environment  = var.prefix
   }
 }
 
@@ -16,7 +16,7 @@ resource "aws_internet_gateway" "my_igw" {
 
   tags           = {
     Name         = "${var.prefix}-igw"
-    Created_by   = var.prefix
+    Environment  = var.prefix
   }
 }
 
@@ -31,17 +31,22 @@ resource "aws_route_table" "rt-public" {
 
     tags         = {
     Name         = "${var.prefix}-rt-public"
-    Created_by   = var.prefix
+    Environment  = var.prefix
   }
 }
 
 # ----------------Route table private
 resource "aws_route_table" "rt-private" {
   vpc_id = aws_vpc.my_new_vpc.id  
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_nat_gateway.nat-gw.id
+  }
   
     tags         = {
     Name         = "${var.prefix}-rt-private"
-    Created_by   = var.prefix
+    Environment  = var.prefix
   }
 }
 
@@ -68,7 +73,7 @@ resource "aws_subnet" "my_pub_subnets" {
 
   tags           = {
     Name         = "public-subnet-${count.index + 1}"
-    Created_by   = var.prefix
+    Environment  = var.prefix
     Tier         = "Public"
   }
 }
@@ -83,7 +88,19 @@ resource "aws_subnet" "my_private_subnets" {
 
   tags           = {
     Name         = "private-subnet-${count.index + 1}"
-    Created_by   = var.prefix
+    Environment  = var.prefix
     Tier         = "Private"
   }
 }
+
+#-------------------Elastic IP and NAT Gateway
+resource "aws_eip" "nat_eip" {
+  vpc           = var.define_eip
+}
+
+resource "aws_nat_gateway" "nat-gw" {
+  allocation_id = aws_eip.nat_eip.id
+  subnet_id     = aws_subnet.my_pub_subnets[0].id
+  depends_on    = [aws_internet_gateway.my_igw]
+}
+

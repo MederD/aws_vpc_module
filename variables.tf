@@ -37,3 +37,8 @@ variable "az_private" {
 	type        = list(string)
     description = "Availibility zones for the private subnets."
 }
+
+variable "define_eip" {
+    type        = bool
+    description = "Set elastic ip. 'true' or 'false'."
+}

@@ -12,3 +12,8 @@ output "my_private_subnets" {
   value       = aws_subnet.my_private_subnets
   description = "Output details of my private subnet"
 }
+
+output "my_eip" {
+  value       = aws_eip.nat_eip
+  description = "Output details of my private subnet"
+}

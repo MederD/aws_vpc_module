@@ -14,10 +14,12 @@ module "vpc" {
 ```
 
 **Created resources:**  
-* VPC
-* Subnets (public and private)
-* Internet Gateway
-* Route tables (public and private)
+* VPC.
+* Subnets (public and private).
+* Internet Gateway.
+* NAT GAteway.
+* Elastic IP (if 'define_eip' will set to 'true'.)
+* Route tables (public and private) and route table associations.
 
 **Variables for configuration:**  
 ```
@@ -28,8 +30,15 @@ instance_tenancy
 sub_cidr_public      
 sub_cidr_private      
 az_public         
-az_private          
+az_private    
+define_eip      
 ```
+
+**Outputs:**  
+* VPC information.
+* Public subnet information.
+* Private subnet information.
+* Elastic IP information.
 
 
 
